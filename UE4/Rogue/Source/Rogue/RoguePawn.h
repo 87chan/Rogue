@@ -5,6 +5,8 @@
 #include <GameFramework/Pawn.h>
 #include "RoguePawn.generated.h"
 
+class AMapManager;
+
 /**
  * 
  */
@@ -16,7 +18,13 @@ class ROGUE_API ARoguePawn : public APawn
 public:
 	ARoguePawn(const FObjectInitializer& ObjectInitializer);
 
+	UFUNCTION(BlueprintCallable,Category = "Rogue|RoguePawn")
+	void AdjustLocation(FVector ArrayLocation);
+
 public:
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
+	AMapManager* MapManagerRef;
+
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
 	FVector ArrayLocation;
 };

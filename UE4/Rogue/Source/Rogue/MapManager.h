@@ -19,9 +19,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MapManager")
 	FVector GetOffset() const;
 
+	UFUNCTION(BlueprintCallable, Category = "MapManager")
+	FVector GetRandomArrayLocation() const;
+
+	UFUNCTION(BlueprintCallable, Category = "MapManager")
+	bool IsPossibleMove(FVector ArrayLocation) const;
+
 public:
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "MapManager")
-	int32	Unit;
 	
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "MapManager")
 	int32	Width;
