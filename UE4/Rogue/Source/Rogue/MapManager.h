@@ -3,7 +3,21 @@
 #pragma once
 
 #include <GameFramework/Actor.h>
+#include "Rogue.h"
 #include "MapManager.generated.h"
+
+USTRUCT(BlueprintType)
+struct FFieldInfo
+{
+	GENERATED_USTRUCT_BODY()
+
+	FFieldInfo() : bOpen(false), Type(EFieldType::Fld_None) {}
+	FFieldInfo(EFieldType InType) : bOpen(false), Type(InType) {}
+
+public:
+	bool		bOpen;
+	EFieldType	Type;
+};
 
 /**
  * 
@@ -16,23 +30,28 @@ class ROGUE_API AMapManager : public AActor
 	AMapManager(const FObjectInitializer& ObjectInitializer);
 	
 public:
-	UFUNCTION(BlueprintCallable, Category = "MapManager")
-	FVector GetOffset() const;
+	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
+	FVector2D GetOffset() const;
 
-	UFUNCTION(BlueprintCallable, Category = "MapManager")
-	FVector GetRandomArrayLocation() const;
+	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
+		FVector2D GetRandomArrayLocation() const;
 
-	UFUNCTION(BlueprintCallable, Category = "MapManager")
-	bool IsPossibleMove(FVector ArrayLocation) const;
+	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
+	bool IsPossibleMove(FVector2D ArrayLocation) const;
 
 public:
-	
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "MapManager")
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
 	int32	Width;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "MapManager")
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
 	int32	Height;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "MapManager")
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
 	bool	bRandomGenerate;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
+	UStaticMesh* Mesh;
+
+private:
+	TArray<TArray<FFieldInfo>> FieldArray;
 };

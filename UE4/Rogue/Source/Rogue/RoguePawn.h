@@ -19,12 +19,12 @@ public:
 	ARoguePawn(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintCallable,Category = "Rogue|RoguePawn")
-	void AdjustLocation(FVector ArrayLocation);
+	void AdjustLocation(FVector2D ArrayLocation);
 
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
 	AMapManager* MapManagerRef;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
-	FVector ArrayLocation;
+	FVector2D ArrayLocation;
 };

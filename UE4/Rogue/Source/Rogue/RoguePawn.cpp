@@ -6,15 +6,15 @@
 ARoguePawn::ARoguePawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, MapManagerRef(nullptr)
-	, ArrayLocation(FVector::ZeroVector)
+	, ArrayLocation(FVector2D::ZeroVector)
 {
 }
 
-void ARoguePawn::AdjustLocation(FVector ArrayLocation)
+void ARoguePawn::AdjustLocation(FVector2D ArrayLocation)
 {
-	FVector Location = FVector::ZeroVector;
+	FVector2D Location = FVector2D::ZeroVector;
 	Location.X = -ArrayLocation.Y * Rogue::Unit;
 	Location.Y = ArrayLocation.X * Rogue::Unit;
 
-	this->SetActorLocation(Location);
+	this->SetActorLocation(FVector(Location.X, Location.Y, 0.0f));
 }
