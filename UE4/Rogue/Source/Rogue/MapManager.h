@@ -31,6 +31,9 @@ class ROGUE_API AMapManager : public AActor
 	
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
+	void CreateMap();
+
+	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
 	FVector2D GetOffset() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
@@ -50,7 +53,10 @@ public:
 	bool	bRandomGenerate;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
-	UStaticMesh* Mesh;
+	UStaticMesh* WallMesh;
+
+private:
+	bool bCreatedMap;
 
 private:
 	TArray<TArray<FFieldInfo>> FieldArray;
