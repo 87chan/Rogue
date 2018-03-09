@@ -37,10 +37,13 @@ public:
 	FVector2D GetOffset() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
-		FVector2D GetRandomArrayLocation() const;
+	FVector2D GetRandomArrayLocation() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
 	bool IsPossibleMove(FVector2D ArrayLocation) const;
+
+private:
+	AActor* SpawnActor(UClass* Class, FVector2D ArrayLocation);
 
 public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
@@ -53,7 +56,10 @@ public:
 	bool	bRandomGenerate;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
-	UStaticMesh* WallMesh;
+	UClass* WallClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
+	UClass* GoalClass;
 
 private:
 	bool bCreatedMap;
