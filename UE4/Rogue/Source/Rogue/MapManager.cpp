@@ -10,8 +10,10 @@ AMapManager::AMapManager(const FObjectInitializer& ObjectInitializer)
 	, Width(10)
 	, Height(10)
 	, bCreatedMap(false)
+	, DefaultEnemyNum(0)
 	, WallClass(nullptr)
 	, GoalClass(nullptr)
+	, EnemyClass(nullptr)
 {
 	TArray<FFieldInfo> FieldInfo;
 	FieldInfo.Init(FFieldInfo(), Width);
@@ -26,11 +28,15 @@ void AMapManager::CreateMap()
 		for (int32 j = 0; j < Width; ++j)
 		{
 			bool bSurround = ((i == 0) || (i == Height - 1) || (j == 0) || (j == Width - 1));
-			FieldArray[i][j] = FFieldInfo((bSurround) ? EFieldType::Fld_Wall : EFieldType::Fld_Floor);
+			EFieldType Type = (bSurround) ? EFieldType::Fld_Wall : EFieldType::FldGrp_BottomLayer;
 
 			if (bSurround)
 			{
-				this->SpawnActor(WallClass, FVector2D(j, i));
+				this->SpawnActor(WallClass, FVector2D(j, i), Type);
+			}
+			else
+			{
+				this->FieldTypeSet(FVector2D(j, i), Type);
 			}
 		}
 	}
@@ -39,7 +45,13 @@ void AMapManager::CreateMap()
 	
 	// Goal.
 	FVector2D GoalArrayLoc = this->GetRandomArrayLocation();
-	this->SpawnActor(GoalClass, GoalArrayLoc);
+	this->SpawnActor(GoalClass, GoalArrayLoc, EFieldType::Fld_Goal);
+
+	for (int32 i = 0; i < DefaultEnemyNum; ++i)
+	{
+		FVector2D EnemyArrayLoc = this->GetRandomArrayLocation();
+		this->SpawnActor(EnemyClass, EnemyArrayLoc, EFieldType::Fld_Enemy);
+	}
 }
 
 FVector2D AMapManager::GetOffset() const
@@ -78,7 +90,7 @@ FVector2D AMapManager::GetRandomArrayLocation() const
 
 	if (0 < FieldArray.Num())
 	{
-		while ((FieldArray[Y][X].Type & EFieldType::Fld_Floor) != EFieldType::Fld_Floor)
+		while ((FieldArray[Y][X].Type & EFieldType::FldGrp_TopLayer) != EFieldType::Fld_None)
 		{
 			X = FMath::Rand() % Width;
 			Y = FMath::Rand() % Height;
@@ -88,17 +100,24 @@ FVector2D AMapManager::GetRandomArrayLocation() const
 	return FVector2D((float)X, (float)Y);
 }
 
-bool AMapManager::IsPossibleMove(FVector2D ArrayLocation) const
+bool AMapManager::IsPossibleMove(const FVector2D& ArrayLocation) const
 {
 	EFieldType Type = FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].Type;
-	return ((Type & EFieldType::Fld_Floor) == EFieldType::Fld_Floor);
+	return ((Type & EFieldType::FldGrp_TopLayer) == EFieldType::Fld_None);
 }
 
-AActor* AMapManager::SpawnActor(UClass* Class, FVector2D ArrayLocation)
+AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type)
 {
-	FTransform Transform = FTransform(FVector(-Rogue::Unit * ArrayLocation.X, Rogue::Unit * ArrayLocation.Y, 0.0f));
+	FTransform Transform = FTransform(FVector(-Rogue::Unit * ArrayLocation.Y, Rogue::Unit * ArrayLocation.X, 0.0f));
 	AActor* Actor = this->GetWorld()->SpawnActor<AActor>(Class, Transform);
 	check(Actor);
 
+	this->FieldTypeSet(ArrayLocation, Type);
+
 	return Actor;
+}
+
+void AMapManager::FieldTypeSet(const FVector2D& ArrayLocation, EFieldType Type)
+{
+	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].Type |= Type;
 }

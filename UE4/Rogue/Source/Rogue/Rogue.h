@@ -12,10 +12,21 @@ namespace Rogue
 UENUM(BlueprintType, meta = (Bitflags))
 enum class EFieldType : uint8
 {
-	Fld_None = 0x00,
-	Fld_Floor = 0x01,
-	Fld_Wall = 0x02,
-	Fld_Player = 0x04,
-	Fld_Enemy = 0x08,
+	Fld_None		= 0x00,
+	Fld_Room		= 0x01,
+	Fld_Way			= 0x02,
+	Fld_Wall		= 0x04,
+	Fld_Goal		= 0x08,
+	Fld_Player		= 0x10,
+	Fld_Enemy		= 0x20,
+	Fld_Trap		= 0x40,
+
+	FldGrp_BottomLayer		=	Fld_Room | Fld_Way,
+
+	FldGrp_MiddleLayer		=	Fld_Goal | Fld_Trap,
+
+	FldGrp_PlacementableTop	=	FldGrp_BottomLayer | FldGrp_MiddleLayer,
+
+	FldGrp_TopLayer			=	Fld_Wall | Fld_Player | Fld_Enemy,
 };
 ENUM_CLASS_FLAGS(EFieldType)

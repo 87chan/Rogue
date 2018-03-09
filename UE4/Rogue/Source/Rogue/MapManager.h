@@ -40,10 +40,12 @@ public:
 	FVector2D GetRandomArrayLocation() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
-	bool IsPossibleMove(FVector2D ArrayLocation) const;
+	bool IsPossibleMove(const FVector2D& ArrayLocation) const;
 
 private:
-	AActor* SpawnActor(UClass* Class, FVector2D ArrayLocation);
+	AActor* SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type);
+
+	void FieldTypeSet(const FVector2D& ArrayLocation, EFieldType Type);
 
 public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
@@ -55,11 +57,17 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
 	bool	bRandomGenerate;
 
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
+	int32	DefaultEnemyNum;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
 	UClass* WallClass;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
 	UClass* GoalClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
+	UClass* EnemyClass;
 
 private:
 	bool bCreatedMap;
