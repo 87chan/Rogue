@@ -26,5 +26,5 @@ public:
 	AMapManager* MapManagerRef;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
-	FVector2D ArrayLocation;
+	FVector2D ArrayLocation;	
 };

@@ -30,3 +30,13 @@ enum class EFieldType : uint8
 	FldGrp_TopLayer			=	Fld_Wall | Fld_Player | Fld_Enemy,
 };
 ENUM_CLASS_FLAGS(EFieldType)
+
+UENUM(BlueprintType)
+enum class EPhaseType : uint8
+{
+	Phase_PlayerAction,
+	Phase_EnemyMove,
+	Phase_TrapAction,
+	Phase_EnemyAction,
+	Phase_StairCheck,
+};
