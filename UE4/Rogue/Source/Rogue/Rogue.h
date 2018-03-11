@@ -7,6 +7,7 @@
 namespace Rogue
 {
 	const int32 Unit = 100;
+	const int32 Direction_Degree_Interval = 45;
 }
 
 UENUM(BlueprintType, meta = (Bitflags))
@@ -39,4 +40,20 @@ enum class EPhaseType : uint8
 	Phase_TrapAction,
 	Phase_EnemyAction,
 	Phase_StairCheck,
+
+	Phase_Num,
+	Phase_None,
+};
+
+UENUM(BlueprintType)
+enum class EDirection_Type : uint8
+{
+	Dir_Upper,
+	Dir_UpperRight,
+	Dir_Right,
+	Dir_LowerRight,
+	Dir_Lower,
+	Dir_LowerLeft,
+	Dir_Left,
+	Dir_UpperLeft,
 };

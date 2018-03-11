@@ -18,6 +18,19 @@ class ROGUE_API ARogueGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 	
 public:
+	ARogueGameModeBase(const FObjectInitializer& ObjectInitializer);
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Rogue|RogueGameModeBase")
+	void BeginPhase(EPhaseType NextPhase);
+
+	UFUNCTION(BlueprintCallable, Category = "Rogue|RogueGameModeBase")
+	void NextPhase();
+
+public:
 	UPROPERTY(BlueprintAssignable, Category = "Rogue|RogueGameModeBase")
 	FPhaseChangedDelegate OnPhaseChanged;
+
+private:
+	EPhaseType CurrentPhase;
 };

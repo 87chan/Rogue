@@ -15,4 +15,8 @@ class ROGUE_API APlayerBase : public ARoguePawn
 	
 public:
 	APlayerBase(const FObjectInitializer& ObjectInitializer);
+
+public:
+	UPROPERTY(BlueprintReadWrite,Category = "Rogue|PlayerBase")
+	bool bCanAction;
 };

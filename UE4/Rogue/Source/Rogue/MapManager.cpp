@@ -32,11 +32,11 @@ void AMapManager::CreateMap()
 
 			if (bSurround)
 			{
-				this->SpawnActor(WallClass, FVector2D(j, i), Type);
+				this->SpawnActor(WallClass, FVector2D(i, j), Type);
 			}
 			else
 			{
-				this->FieldTypeSet(FVector2D(j, i), Type);
+				this->FieldTypeSet(FVector2D(i, j), Type);
 			}
 		}
 	}
@@ -109,7 +109,10 @@ bool AMapManager::IsPossibleMove(const FVector2D& ArrayLocation) const
 AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type)
 {
 	FTransform Transform = FTransform(FVector(-Rogue::Unit * ArrayLocation.Y, Rogue::Unit * ArrayLocation.X, 0.0f));
-	AActor* Actor = this->GetWorld()->SpawnActor<AActor>(Class, Transform);
+	FActorSpawnParameters Params;
+	Params.bNoFail = true;
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	AActor* Actor = this->GetWorld()->SpawnActor<AActor>(Class, Transform, Params);
 	check(Actor);
 
 	this->FieldTypeSet(ArrayLocation, Type);

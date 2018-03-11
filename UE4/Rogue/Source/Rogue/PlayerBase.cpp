@@ -4,5 +4,6 @@
 
 APlayerBase::APlayerBase(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
+	, bCanAction(false)
 {
 }
