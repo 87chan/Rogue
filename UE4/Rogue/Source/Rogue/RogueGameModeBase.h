@@ -21,6 +21,9 @@ public:
 	ARogueGameModeBase(const FObjectInitializer& ObjectInitializer);
 
 public:
+	UFUNCTION(BlueprintPure, Category = "Rogue|RogueGameModeBase")
+	bool CheckCurrentPhase(EPhaseType Type) const { return (CurrentPhase == Type); }
+
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RogueGameModeBase")
 	void BeginPhase(EPhaseType NextPhase);
 

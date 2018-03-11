@@ -26,6 +26,9 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
 	void Turn(UStaticMeshComponent* Mesh, EDirection_Type DirType);
+
+	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
+	bool TryMove(EDirection_Type DirType);
 	
 	UFUNCTION(BlueprintCallable,Category = "Rogue|RoguePawn")
 	void AdjustLocation(FVector2D ArrayLocation);

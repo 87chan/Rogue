@@ -3,6 +3,8 @@
 #include "RoguePawn.h"
 #include "Rogue.h"
 #include "Components/StaticMeshComponent.h"
+#include "RogueUtility.h"
+#include "MapManager.h"
 
 ARoguePawn::ARoguePawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -19,9 +21,22 @@ void ARoguePawn::BeginPlay()
 
 void ARoguePawn::Turn(UStaticMeshComponent* Mesh, EDirection_Type DirType)
 {
-	FRotator Rotation = FRotator(0.0f, (int32)DirType * Rogue::Direction_Degree_Interval, 0.0f);
+	Mesh->SetRelativeRotation(RogueUtility::GetRotation(DirType));
+}
 
-	Mesh->SetRelativeRotation(Rotation);
+bool ARoguePawn::TryMove(EDirection_Type DirType)
+{
+	FVector2D Diretion = RogueUtility::GetDirection(DirType);
+
+	if (MapManagerRef->IsPossibleMove(ArrayLocation + Diretion))
+	{
+		ArrayLocation += Diretion;
+		this->AdjustLocation(ArrayLocation);
+
+		return true;
+	}
+
+	return false;
 }
 
 void ARoguePawn::AdjustLocation(FVector2D ArrayLocation)
