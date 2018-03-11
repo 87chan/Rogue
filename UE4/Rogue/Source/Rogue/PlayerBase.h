@@ -12,9 +12,13 @@ UCLASS(Blueprintable, BlueprintType)
 class ROGUE_API APlayerBase : public ARoguePawn
 {
 	GENERATED_BODY()
-	
+
 public:
 	APlayerBase(const FObjectInitializer& ObjectInitializer);
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Rogue|PlayerBase")
+	bool TryMove(EDirection_Type DirType);
 
 public:
 	UPROPERTY(BlueprintReadWrite,Category = "Rogue|PlayerBase")

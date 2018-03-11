@@ -5,6 +5,8 @@
 #include "RoguePawn.h"
 #include "EnemyBase.generated.h"
 
+class AEnemyManager;
+
 /**
  * 
  */
@@ -15,4 +17,15 @@ class ROGUE_API AEnemyBase : public ARoguePawn
 	
 public:
 	AEnemyBase(const FObjectInitializer& ObjectInitializer);
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")
+	const EDirection_Type Move();
+
+public:
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|EnemyBase")
+	AEnemyManager* EnemyManager;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|EnemyBase")
+	EPhaseType ActivePhase;
 };

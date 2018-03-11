@@ -4,6 +4,7 @@
 #include "Rogue.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/StaticMeshActor.h"
+#include "RoguePawn.h"
 
 AMapManager::AMapManager(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -116,6 +117,10 @@ AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, E
 	check(Actor);
 
 	this->FieldTypeSet(ArrayLocation, Type);
+	if (ARoguePawn* RoguePawn = Cast<ARoguePawn>(Actor))
+	{
+		RoguePawn->ArrayLocation = ArrayLocation;
+	}
 
 	return Actor;
 }
@@ -123,4 +128,10 @@ AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, E
 void AMapManager::FieldTypeSet(const FVector2D& ArrayLocation, EFieldType Type)
 {
 	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].Type |= Type;
+}
+
+void AMapManager::ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type)
+{
+	FieldArray[(int32)PrevArrayLoc.Y][(int32)PrevArrayLoc.X].Type &= ~Type;
+	FieldArray[(int32)NextArrayLoc.Y][(int32)NextArrayLoc.X].Type |= Type;
 }

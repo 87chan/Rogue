@@ -42,6 +42,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|MapManager")
 	bool IsPossibleMove(const FVector2D& ArrayLocation) const;
 
+public:
+	void ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type);
+
 private:
 	AActor* SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type);
 

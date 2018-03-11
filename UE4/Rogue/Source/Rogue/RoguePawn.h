@@ -26,16 +26,13 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
 	void Turn(UStaticMeshComponent* Mesh, EDirection_Type DirType);
-
-	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
-	bool TryMove(EDirection_Type DirType);
 	
 	UFUNCTION(BlueprintCallable,Category = "Rogue|RoguePawn")
-	void AdjustLocation(FVector2D ArrayLocation);
+	void AdjustLocation(FVector2D InArrayLocation);
 
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
-	AMapManager* MapManagerRef;
+	AMapManager* MapManager;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
 	FVector2D ArrayLocation;

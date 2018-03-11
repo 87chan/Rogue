@@ -41,7 +41,7 @@ enum class EPhaseType : uint8
 	Phase_EnemyAction,
 	Phase_StairCheck,
 
-	Phase_Num,
+	Phase_Num			UMETA(Hidden),
 	Phase_None,
 };
 
@@ -56,4 +56,6 @@ enum class EDirection_Type : uint8
 	Dir_LowerLeft,
 	Dir_Left,
 	Dir_UpperLeft,
+
+	Dir_Num				UMETA(Hidden),
 };

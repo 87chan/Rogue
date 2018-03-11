@@ -8,7 +8,7 @@
 
 ARoguePawn::ARoguePawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
-	, MapManagerRef(nullptr)
+	, MapManager(nullptr)
 	, ArrayLocation(FVector2D::ZeroVector)
 	, Direction(EDirection_Type::Dir_Lower)
 {
@@ -24,23 +24,10 @@ void ARoguePawn::Turn(UStaticMeshComponent* Mesh, EDirection_Type DirType)
 	Mesh->SetRelativeRotation(RogueUtility::GetRotation(DirType));
 }
 
-bool ARoguePawn::TryMove(EDirection_Type DirType)
+void ARoguePawn::AdjustLocation(FVector2D InArrayLocation)
 {
-	FVector2D Diretion = RogueUtility::GetDirection(DirType);
+	ArrayLocation = InArrayLocation;
 
-	if (MapManagerRef->IsPossibleMove(ArrayLocation + Diretion))
-	{
-		ArrayLocation += Diretion;
-		this->AdjustLocation(ArrayLocation);
-
-		return true;
-	}
-
-	return false;
-}
-
-void ARoguePawn::AdjustLocation(FVector2D ArrayLocation)
-{
 	FVector2D Location = FVector2D::ZeroVector;
 	Location.X = -ArrayLocation.Y * Rogue::Unit;
 	Location.Y = ArrayLocation.X * Rogue::Unit;
