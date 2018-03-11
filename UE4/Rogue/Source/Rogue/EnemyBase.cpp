@@ -20,9 +20,9 @@ void AEnemyBase::BeginPlay()
 const EDirection_Type AEnemyBase::Move()
 {
 	FVector2D TargetArrayLocation = MapManager->Search(EFieldType::Fld_Player);
-	FVector2D Direction = FVector2D(TargetArrayLocation - ArrayLocation).ClampAxes(-1.0f, 1.0f);
-	EDirection_Type NextDirection = RogueUtility::GetDirection(Direction);
-	FVector2D NextArrayLocation = ArrayLocation + Direction;
+	FVector2D TargetDirection = FVector2D(TargetArrayLocation - ArrayLocation).ClampAxes(-1.0f, 1.0f);
+	FVector2D NextArrayLocation = ArrayLocation + TargetDirection;
+	EDirection_Type NextDirection = RogueUtility::GetDirection(TargetDirection);
 
 	if (MapManager->IsPossibleMove(NextArrayLocation))
 	{
