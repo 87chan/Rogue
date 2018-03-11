@@ -18,6 +18,9 @@ class ROGUE_API AEnemyBase : public ARoguePawn
 public:
 	AEnemyBase(const FObjectInitializer& ObjectInitializer);
 
+	//~ Actor interface.
+	void BeginPlay();
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")
 	const EDirection_Type Move();

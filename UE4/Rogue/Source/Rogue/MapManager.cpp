@@ -107,6 +107,28 @@ bool AMapManager::IsPossibleMove(const FVector2D& ArrayLocation) const
 	return ((Type & EFieldType::FldGrp_TopLayer) == EFieldType::Fld_None);
 }
 
+void AMapManager::ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type)
+{
+	FieldArray[(int32)PrevArrayLoc.Y][(int32)PrevArrayLoc.X].Type &= ~Type;
+	FieldArray[(int32)NextArrayLoc.Y][(int32)NextArrayLoc.X].Type |= Type;
+}
+
+const FVector2D AMapManager::Search(EFieldType Type) const
+{
+	for (int32 i = 0; i < Height; ++i)
+	{
+		for (int32 j = 0; j < Width; ++j)
+		{
+			if ((FieldArray[i][j].Type & Type) != EFieldType::Fld_None)
+			{
+				return FVector2D((float)j, (float)i);
+			}
+		}
+	}
+
+	return FVector2D::ZeroVector;
+}
+
 AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type)
 {
 	FTransform Transform = FTransform(FVector(-Rogue::Unit * ArrayLocation.Y, Rogue::Unit * ArrayLocation.X, 0.0f));
@@ -128,10 +150,4 @@ AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, E
 void AMapManager::FieldTypeSet(const FVector2D& ArrayLocation, EFieldType Type)
 {
 	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].Type |= Type;
-}
-
-void AMapManager::ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type)
-{
-	FieldArray[(int32)PrevArrayLoc.Y][(int32)PrevArrayLoc.X].Type &= ~Type;
-	FieldArray[(int32)NextArrayLoc.Y][(int32)NextArrayLoc.X].Type |= Type;
 }

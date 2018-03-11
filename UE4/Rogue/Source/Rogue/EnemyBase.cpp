@@ -12,18 +12,25 @@ AEnemyBase::AEnemyBase(const FObjectInitializer& ObjectInitializer)
 {
 }
 
+void AEnemyBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Direction = RogueUtility::GetRandomDirection();
+}
+
 const EDirection_Type AEnemyBase::Move()
 {
-	EDirection_Type NextDirection = static_cast<EDirection_Type>(FMath::Rand() % (int32)EDirection_Type::Dir_Num);
-	FVector2D NextArrayLocation = ArrayLocation + RogueUtility::GetDirection(NextDirection);
+	FVector2D TargetArrayLocation = MapManager->Search(EFieldType::Fld_Player);
+	FVector2D Direction = FVector2D(TargetArrayLocation - ArrayLocation).ClampAxes(-1.0f, 1.0f);
+	EDirection_Type NextDirection = RogueUtility::GetDirection(Direction);
+	FVector2D NextArrayLocation = ArrayLocation + Direction;
 
 	if (MapManager->IsPossibleMove(NextArrayLocation))
 	{
 		MapManager->ChangeFieldType(ArrayLocation, NextArrayLocation, EFieldType::Fld_Enemy);
 		this->AdjustLocation(NextArrayLocation);
-
-		return NextDirection;
 	}
 
-	return Direction;
+	return NextDirection;
 }

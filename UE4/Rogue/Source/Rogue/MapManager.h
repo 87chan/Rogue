@@ -45,6 +45,8 @@ public:
 public:
 	void ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type);
 
+	const FVector2D Search(EFieldType Type) const;
+
 private:
 	AActor* SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type);
 

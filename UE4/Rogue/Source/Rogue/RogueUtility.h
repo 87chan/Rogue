@@ -10,6 +10,8 @@ class ARogueGameModeBase;
 
 namespace RogueUtility
 {
-	FRotator GetRotation(EDirection_Type DirType);
-	FVector2D GetDirection(EDirection_Type DirType);
+	const FRotator GetRotation(EDirection_Type DirType);
+	const FVector2D GetDirection(EDirection_Type DirType);
+	EDirection_Type GetDirection(const FVector2D& Direction);
+	EDirection_Type GetRandomDirection();
 }

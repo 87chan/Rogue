@@ -58,4 +58,5 @@ enum class EDirection_Type : uint8
 	Dir_UpperLeft,
 
 	Dir_Num				UMETA(Hidden),
+	Dir_None,
 };
