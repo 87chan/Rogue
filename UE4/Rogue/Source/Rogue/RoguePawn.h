@@ -7,7 +7,7 @@
 #include "RoguePawn.generated.h"
 
 class AMapManager;
-class UStaticMeshComponent;
+class USceneComponent;
 
 /**
  * 
@@ -25,7 +25,7 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
-	void Turn(UStaticMeshComponent* Mesh, EDirection_Type DirType);
+	void Turn(EDirection_Type DirType);
 	
 	UFUNCTION(BlueprintCallable,Category = "Rogue|RoguePawn")
 	void AdjustLocation(FVector2D InArrayLocation);

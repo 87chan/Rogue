@@ -15,8 +15,6 @@ AEnemyBase::AEnemyBase(const FObjectInitializer& ObjectInitializer)
 void AEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Direction = RogueUtility::GetRandomDirection();
 }
 
 const EDirection_Type AEnemyBase::Move()

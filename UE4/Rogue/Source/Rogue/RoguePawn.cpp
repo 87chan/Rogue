@@ -10,18 +10,21 @@ ARoguePawn::ARoguePawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, MapManager(nullptr)
 	, ArrayLocation(FVector2D::ZeroVector)
-	, Direction(EDirection_Type::Dir_Lower)
+	, Direction(EDirection_Type::Dir_None)
 {
 }
 
 void ARoguePawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Direction = RogueUtility::GetRandomDirection();
+	this->Turn(Direction);
 }
 
-void ARoguePawn::Turn(UStaticMeshComponent* Mesh, EDirection_Type DirType)
+void ARoguePawn::Turn(EDirection_Type DirType)
 {
-	Mesh->SetRelativeRotation(RogueUtility::GetRotation(DirType));
+	RootComponent->SetRelativeRotation(RogueUtility::GetRotation(DirType));
 }
 
 void ARoguePawn::AdjustLocation(FVector2D InArrayLocation)
