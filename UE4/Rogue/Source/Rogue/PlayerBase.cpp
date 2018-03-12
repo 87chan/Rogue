@@ -3,11 +3,13 @@
 #include "PlayerBase.h"
 #include "RogueUtility.h"
 #include "MapManager.h"
+#include "RogueMainInputComponent.h"
 
 APlayerBase::APlayerBase(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, bCanAction(false)
 {
+	ObjectInitializer.CreateDefaultSubobject<URogueMainInputComponent>(this, "RogueMainInputComponent");
 }
 
 bool APlayerBase::TryMove(EDirection_Type DirType)
