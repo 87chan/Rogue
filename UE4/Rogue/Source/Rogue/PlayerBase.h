@@ -17,6 +17,9 @@ public:
 	APlayerBase(const FObjectInitializer& ObjectInitializer);
 
 public:
+	EFieldType GetFieldType() const override { return EFieldType::Fld_Player; }
+
+public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|PlayerBase")
 	bool TryMove(EDirection_Type DirType);
 

@@ -26,7 +26,6 @@ const EDirection_Type AEnemyBase::Move()
 
 	if (MapManager->IsPossibleMove(NextArrayLocation))
 	{
-		MapManager->ChangeFieldType(ArrayLocation, NextArrayLocation, EFieldType::Fld_Enemy);
 		this->AdjustLocation(NextArrayLocation);
 	}
 

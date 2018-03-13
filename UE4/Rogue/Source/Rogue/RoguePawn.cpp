@@ -29,6 +29,8 @@ void ARoguePawn::Turn(EDirection_Type DirType)
 
 void ARoguePawn::AdjustLocation(FVector2D InArrayLocation)
 {
+	MapManager->ChangeFieldType(ArrayLocation, InArrayLocation, this->GetFieldType());
+
 	ArrayLocation = InArrayLocation;
 
 	FVector2D Location = FVector2D::ZeroVector;

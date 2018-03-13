@@ -22,6 +22,9 @@ public:
 	void BeginPlay();
 
 public:
+	EFieldType GetFieldType() const override { return EFieldType::Fld_Enemy; }
+
+public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")
 	const EDirection_Type Move();
 

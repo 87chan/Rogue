@@ -19,7 +19,6 @@ bool APlayerBase::TryMove(EDirection_Type DirType)
 
 	if (MapManager->IsPossibleMove(NextLocation))
 	{
-		MapManager->ChangeFieldType(ArrayLocation, NextLocation, EFieldType::Fld_Player);
 		this->AdjustLocation(NextLocation);
 
 		return true;

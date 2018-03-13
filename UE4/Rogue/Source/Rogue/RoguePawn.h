@@ -24,6 +24,9 @@ public:
 	void BeginPlay() override;
 
 public:
+	virtual EFieldType GetFieldType() const { return EFieldType::Fld_None; }
+
+public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
 	void Turn(EDirection_Type DirType);
 	
