@@ -11,6 +11,11 @@ ARoguePawn::ARoguePawn(const FObjectInitializer& ObjectInitializer)
 	, MapManager(nullptr)
 	, ArrayLocation(FVector2D::ZeroVector)
 	, Direction(EDirection_Type::Dir_None)
+	, MaxLifePoint()
+	, LeftLifePoint()
+	, RiskPoint()
+	, BaseAttack()
+	, BaseDeffence()
 {
 }
 

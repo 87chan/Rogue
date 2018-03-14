@@ -42,4 +42,19 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
 	EDirection_Type Direction;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
+	int32 MaxLifePoint;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
+	int32 LeftLifePoint;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
+	int32 RiskPoint;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
+	int32 BaseAttack;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
+	int32 BaseDeffence;
 };
