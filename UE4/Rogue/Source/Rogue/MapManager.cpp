@@ -91,7 +91,7 @@ FVector2D AMapManager::GetRandomArrayLocation() const
 
 	if (0 < FieldArray.Num())
 	{
-		while ((FieldArray[Y][X].Type & EFieldType::FldGrp_TopLayer) != EFieldType::Fld_None)
+		while ((FieldArray[Y][X].FieldType & EFieldType::FldGrp_TopLayer) != EFieldType::Fld_None)
 		{
 			X = FMath::Rand() % Width;
 			Y = FMath::Rand() % Height;
@@ -103,14 +103,14 @@ FVector2D AMapManager::GetRandomArrayLocation() const
 
 bool AMapManager::IsPossibleMove(const FVector2D& ArrayLocation) const
 {
-	EFieldType Type = FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].Type;
+	EFieldType Type = FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].FieldType;
 	return ((Type & EFieldType::FldGrp_TopLayer) == EFieldType::Fld_None);
 }
 
 void AMapManager::ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type)
 {
-	FieldArray[(int32)PrevArrayLoc.Y][(int32)PrevArrayLoc.X].Type &= ~Type;
-	FieldArray[(int32)NextArrayLoc.Y][(int32)NextArrayLoc.X].Type |= Type;
+	FieldArray[(int32)PrevArrayLoc.Y][(int32)PrevArrayLoc.X].FieldType &= ~Type;
+	FieldArray[(int32)NextArrayLoc.Y][(int32)NextArrayLoc.X].FieldType |= Type;
 }
 
 const FVector2D AMapManager::Search(EFieldType Type) const
@@ -119,7 +119,7 @@ const FVector2D AMapManager::Search(EFieldType Type) const
 	{
 		for (int32 j = 0; j < Width; ++j)
 		{
-			if ((FieldArray[i][j].Type & Type) != EFieldType::Fld_None)
+			if ((FieldArray[i][j].FieldType & Type) != EFieldType::Fld_None)
 			{
 				return FVector2D((float)j, (float)i);
 			}
@@ -149,5 +149,10 @@ AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, E
 
 void AMapManager::FieldTypeSet(const FVector2D& ArrayLocation, EFieldType Type)
 {
-	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].Type |= Type;
+	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].FieldType |= Type;
+}
+
+void AMapManager::EffectTypeSet(const FVector2D& ArrayLocation, EEffectType Type)
+{
+	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].EffectType |= Type;
 }

@@ -24,6 +24,8 @@ public:
 public:
 	EFieldType GetFieldType() const override { return EFieldType::Fld_Enemy; }
 
+	EEffectType GetAttackType() const override { return EEffectType::Eff_EnemyrAttack; }
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")
 	const EDirection_Type Move();

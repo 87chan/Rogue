@@ -11,12 +11,13 @@ struct FFieldInfo
 {
 	GENERATED_USTRUCT_BODY()
 
-	FFieldInfo() : bOpen(false), Type(EFieldType::Fld_None) {}
-	FFieldInfo(EFieldType InType) : bOpen(false), Type(InType) {}
+		FFieldInfo() : bOpen(false), FieldType(EFieldType::Fld_None), EffectType(EEffectType::Eff_None) {}
+	FFieldInfo(EFieldType InFieldType, EEffectType InEffectType) : bOpen(false), FieldType(InFieldType), EffectType(InEffectType) {}
 
 public:
 	bool		bOpen;
-	EFieldType	Type;
+	EFieldType	FieldType;
+	EEffectType	EffectType;
 };
 
 /**
@@ -44,6 +45,8 @@ public:
 
 public:
 	void ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type);
+
+	void EffectTypeSet(const FVector2D& ArrayLocation, EEffectType Type);
 
 	const FVector2D Search(EFieldType Type) const;
 

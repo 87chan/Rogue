@@ -26,12 +26,17 @@ public:
 public:
 	virtual EFieldType GetFieldType() const { return EFieldType::Fld_None; }
 
+	virtual EEffectType GetAttackType() const { return EEffectType::Eff_None; }
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
 	void Turn(EDirection_Type DirType);
 	
 	UFUNCTION(BlueprintCallable,Category = "Rogue|RoguePawn")
 	void AdjustLocation(FVector2D InArrayLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
+	void Attack();
 
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")

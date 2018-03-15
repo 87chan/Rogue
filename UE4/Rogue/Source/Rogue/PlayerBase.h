@@ -19,6 +19,8 @@ public:
 public:
 	EFieldType GetFieldType() const override { return EFieldType::Fld_Player; }
 
+	EEffectType GetAttackType() const override { return EEffectType::Eff_PlayerAttack; }
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|PlayerBase")
 	bool TryMove(EDirection_Type DirType);

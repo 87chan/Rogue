@@ -32,6 +32,16 @@ enum class EFieldType : uint8
 };
 ENUM_CLASS_FLAGS(EFieldType)
 
+UENUM(BlueprintType, meta = (Bitflags))
+enum class EEffectType : uint8
+{
+	Eff_None			= 0x00,
+	Eff_PlayerAttack	= 0x01,
+	Eff_EnemyrAttack	= 0x02,
+	Eff_Trap			= 0x04,
+};
+ENUM_CLASS_FLAGS(EEffectType)
+
 UENUM(BlueprintType)
 enum class EPhaseType : uint8
 {

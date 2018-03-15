@@ -44,3 +44,9 @@ void ARoguePawn::AdjustLocation(FVector2D InArrayLocation)
 
 	this->SetActorLocation(FVector(Location.X, Location.Y, 0.0f));
 }
+
+void ARoguePawn::Attack()
+{
+	FVector2D AttackArrayLocation = ArrayLocation + RogueUtility::GetDirection(Direction);
+	MapManager->EffectTypeSet(AttackArrayLocation, this->GetAttackType());
+}
