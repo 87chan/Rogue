@@ -71,3 +71,24 @@ void ARoguePawn::Attack()
 
 	MapManager->EffectInfoSet(AttackArrayLocation, Info);
 }
+
+void ARoguePawn::ApplyDamage(EEffectType ApplyEffect)
+{
+	if (MapManager)
+	{
+		FApplyEffectList ApplyEffectList;
+		MapManager->Search(ApplyEffect, ApplyEffectList);
+
+		for (FApplyEffectInfo ApplyEffectInfo : ApplyEffectList)
+		{
+			if (ArrayLocation == ApplyEffectInfo.ArrayLocation)
+			{
+				const FEffectInfo EffectInfo = MapManager->GetEffectInfo(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);
+				int32 CalcedDamage = EffectInfo.Damage - BaseDeffence;
+				LeftLifePoint -= CalcedDamage;
+
+				MapManager->Consume(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);
+			}
+		}
+	}
+}

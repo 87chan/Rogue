@@ -42,7 +42,7 @@ public:
 	void Attack();
 
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
-	virtual void ApplyDamage() {}
+	void ApplyDamage(EEffectType ApplyEffect);
 
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")

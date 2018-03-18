@@ -18,26 +18,6 @@ void AEnemyBase::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AEnemyBase::ApplyDamage()
-{
-	if (MapManager)
-	{
-		FApplyEffectList ApplyEffectList;
-		MapManager->Search(EEffectType::Eff_PlayerAttack, ApplyEffectList);
-
-		for (FApplyEffectInfo ApplyEffectInfo : ApplyEffectList)
-		{
-			if (ArrayLocation == ApplyEffectInfo.ArrayLocation)
-			{
-				const FEffectInfo EffectInfo = MapManager->GetEffectInfo(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);
-				LeftLifePoint -= EffectInfo.Damage;
-
-				MapManager->Consume(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);
-			}
-		}
-	}
-}
-
 void AEnemyBase::TurnToPlayer()
 {
 	FVector2D TargetArrayLocation = MapManager->Search(EFieldType::Fld_Player);

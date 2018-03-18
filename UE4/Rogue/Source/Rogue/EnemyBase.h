@@ -26,8 +26,6 @@ public:
 
 	EEffectType GetAttackType() const override { return EEffectType::Eff_EnemyAttack; }
 
-	virtual void ApplyDamage() override;
-
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")
 	void TurnToPlayer();

@@ -22,8 +22,6 @@ public:
 
 	EEffectType GetAttackType() const override { return EEffectType::Eff_PlayerAttack; }
 
-	virtual void ApplyDamage() override;
-
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|PlayerBase")
 	bool TryMove(EDirection_Type DirType);
