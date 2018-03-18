@@ -41,3 +41,11 @@ void AEnemyManager::RegisterEnemy(AEnemyBase* Enemy)
 {
 	EnemyArray.Add(Enemy);
 }
+
+void AEnemyManager::NotifyActivePhase(EPhaseType Type)
+{
+	for (AEnemyBase* Enemy : EnemyArray)
+	{
+		Enemy->ActivePhase = Type;
+	}
+}

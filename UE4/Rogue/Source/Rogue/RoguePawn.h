@@ -29,6 +29,9 @@ public:
 	virtual EEffectType GetAttackType() const { return EEffectType::Eff_None; }
 
 public:
+	UFUNCTION(BlueprintPure, Category = "Rogue|RoguePawn")
+	bool CheckAdjacent(EFieldType Type);
+
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
 	void Turn(EDirection_Type DirType);
 	

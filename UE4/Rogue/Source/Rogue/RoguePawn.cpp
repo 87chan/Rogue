@@ -31,10 +31,23 @@ void ARoguePawn::BeginPlay()
 	this->Turn(Direction);
 }
 
+bool ARoguePawn::CheckAdjacent(EFieldType Type)
+{
+	if (MapManager)
+	{
+		return MapManager->CheckAdjacent(ArrayLocation, Type);
+	}
+
+	return false;
+}
+
 void ARoguePawn::Turn(EDirection_Type DirType)
 {
-	Direction = DirType;
-	RootComponent->SetRelativeRotation(RogueUtility::GetRotation(DirType));
+	if (DirType != EDirection_Type::Dir_None)
+	{
+		Direction = DirType;
+		RootComponent->SetRelativeRotation(RogueUtility::GetRotation(DirType));
+	}
 }
 
 void ARoguePawn::AdjustLocation(FVector2D InArrayLocation)

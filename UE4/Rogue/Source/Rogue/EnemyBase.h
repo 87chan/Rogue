@@ -24,13 +24,16 @@ public:
 	//~ ARoguePawn interface.
 	EFieldType GetFieldType() const override { return EFieldType::Fld_Enemy; }
 
-	EEffectType GetAttackType() const override { return EEffectType::Eff_EnemyrAttack; }
+	EEffectType GetAttackType() const override { return EEffectType::Eff_EnemyAttack; }
 
 	virtual void ApplyDamage() override;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")
-	const EDirection_Type Move();
+	void TurnToPlayer();
+
+	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")
+	void Move();
 
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|EnemyBase")
@@ -38,4 +41,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|EnemyBase")
 	EPhaseType ActivePhase;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|EnemyBase")
+	bool bConsumeAction;
 };

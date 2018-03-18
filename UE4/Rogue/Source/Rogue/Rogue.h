@@ -37,7 +37,7 @@ enum class EEffectType : uint8
 {
 	Eff_None			= 0x00,
 	Eff_PlayerAttack	= 0x01,
-	Eff_EnemyrAttack	= 0x02,
+	Eff_EnemyAttack		= 0x02,
 	Eff_Trap			= 0x04,
 };
 ENUM_CLASS_FLAGS(EEffectType)
@@ -50,6 +50,7 @@ enum class EPhaseType : uint8
 	Phase_EnemyMove,
 	Phase_TrapAction,
 	Phase_EnemyAction,
+	Phase_EnemyAttack,
 	Phase_StairCheck,
 
 	Phase_Num			UMETA(Hidden),

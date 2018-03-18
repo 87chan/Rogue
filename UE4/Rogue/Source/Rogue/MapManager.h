@@ -35,6 +35,16 @@ public:
 	TArray<FEffectInfo>	EffectList;
 };
 
+struct FApplyEffectInfo
+{
+	FApplyEffectInfo() :ArrayLocation(FVector2D::ZeroVector), Index() {}
+
+public:
+	FVector2D	ArrayLocation;
+	int32		Index;
+};
+typedef TArray<FApplyEffectInfo> FApplyEffectList;
+
 /**
  * 
  */
@@ -62,12 +72,15 @@ public:
 	const FEffectInfo GetEffectInfo(const FVector2D& InArrayLocation, int32 Index) const;
 	void Consume(const FVector2D& InArrayLocation, int32 Index);
 
+	bool CheckExist(const FVector2D& InArrayLocation, EFieldType Type);
+	bool CheckAdjacent(const FVector2D& InArrayLocation, EFieldType Type);
+
 	void ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type);
 
 	void EffectInfoSet(const FVector2D& ArrayLocation, FEffectInfo Info);
 
 	const FVector2D Search(EFieldType Type) const;
-	void Search(EEffectType Type, FVector2D& OutArrayLoc, int32& OutIndex) const;
+	void Search(EEffectType Type, FApplyEffectList& OutList) const;
 
 private:
 	AActor* SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type);

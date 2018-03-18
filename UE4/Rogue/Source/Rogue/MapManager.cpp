@@ -5,6 +5,7 @@
 #include "Engine/StaticMesh.h"
 #include "Engine/StaticMeshActor.h"
 #include "RoguePawn.h"
+#include "RogueUtility.h"
 
 AMapManager::AMapManager(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -128,6 +129,29 @@ void AMapManager::Consume(const FVector2D& InArrayLocation, int32 Index)
 	}
 }
 
+bool AMapManager::CheckExist(const FVector2D& InArrayLocation, EFieldType Type)
+{
+	if (InArrayLocation.X < 0 || Width <= InArrayLocation.X) return false;
+	if (InArrayLocation.Y < 0 || Height <= InArrayLocation.Y) return false;
+
+	if ((FieldArray[(int32)InArrayLocation.Y][(int32)InArrayLocation.X].FieldType & Type) != EFieldType::Fld_None)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool AMapManager::CheckAdjacent(const FVector2D& InArrayLocation, EFieldType Type)
+{
+	for (int32 i = 0; i < (int32)EDirection_Type::Dir_Num; ++i)
+	{
+		if (CheckExist(InArrayLocation + RogueUtility::GetDirection(static_cast<EDirection_Type>(i)), Type)) return true;
+	}
+
+	return false;
+}
+
 void AMapManager::ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type)
 {
 	FieldArray[(int32)PrevArrayLoc.Y][(int32)PrevArrayLoc.X].FieldType &= ~Type;
@@ -150,7 +174,7 @@ const FVector2D AMapManager::Search(EFieldType Type) const
 	return FVector2D::ZeroVector;
 }
 
-void AMapManager::Search(EEffectType Type, FVector2D& OutArrayLoc, int32& OutIndex) const
+void AMapManager::Search(EEffectType Type, FApplyEffectList& OutList) const
 {
 	for (int32 i = 0; i < Height; ++i)
 	{
@@ -163,8 +187,10 @@ void AMapManager::Search(EEffectType Type, FVector2D& OutArrayLoc, int32& OutInd
 				{
 					if ((InfoList[k].EffectType & Type) != EEffectType::Eff_None)
 					{
-						OutArrayLoc = FVector2D((float)j, (float)i);
-						OutIndex = k;
+						FApplyEffectInfo ApplyInfo = FApplyEffectInfo();
+						ApplyInfo.ArrayLocation = FVector2D((float)j, (float)i);
+						ApplyInfo.Index = k;
+						OutList.Add(ApplyInfo);
 
 						return;
 					}

@@ -17,9 +17,12 @@ public:
 	APlayerBase(const FObjectInitializer& ObjectInitializer);
 
 public:
+	//~ RoguePawn interface.
 	EFieldType GetFieldType() const override { return EFieldType::Fld_Player; }
 
 	EEffectType GetAttackType() const override { return EEffectType::Eff_PlayerAttack; }
+
+	virtual void ApplyDamage() override;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|PlayerBase")

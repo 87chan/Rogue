@@ -23,7 +23,10 @@ class ROGUE_API AEnemyManager : public AActor
 
 public:
 	UFUNCTION(BlueprintCallable,Category = "EnemyManager")
-	void RegisterEnemy(AEnemyBase* Enemy);	
+	void RegisterEnemy(AEnemyBase* Enemy);
+
+	UFUNCTION(BlueprintCallable, Category = "EnemyManager")
+	void NotifyActivePhase(EPhaseType Type);
 
 public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Rogue|EnemyManager")

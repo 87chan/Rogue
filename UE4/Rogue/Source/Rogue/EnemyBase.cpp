@@ -9,6 +9,7 @@ AEnemyBase::AEnemyBase(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, EnemyManager(nullptr)
 	, ActivePhase(EPhaseType::Phase_None)
+	, bConsumeAction(false)
 {
 }
 
@@ -21,36 +22,46 @@ void AEnemyBase::ApplyDamage()
 {
 	if (MapManager)
 	{
-		FVector2D ArrayLoc = FVector2D::ZeroVector;
-		int32 Index = 0;
-		MapManager->Search(EEffectType::Eff_PlayerAttack, ArrayLoc, Index);
+		FApplyEffectList ApplyEffectList;
+		MapManager->Search(EEffectType::Eff_PlayerAttack, ApplyEffectList);
 
-		if (ArrayLocation == ArrayLoc)
+		for (FApplyEffectInfo ApplyEffectInfo : ApplyEffectList)
 		{
-			const FEffectInfo EffectInfo = MapManager->GetEffectInfo(ArrayLoc, Index);
-			LeftLifePoint -= EffectInfo.Damage;
+			if (ArrayLocation == ApplyEffectInfo.ArrayLocation)
+			{
+				const FEffectInfo EffectInfo = MapManager->GetEffectInfo(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);
+				LeftLifePoint -= EffectInfo.Damage;
 
-			MapManager->Consume(ArrayLoc, Index);
+				MapManager->Consume(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);
+			}
 		}
 	}
 }
 
-const EDirection_Type AEnemyBase::Move()
+void AEnemyBase::TurnToPlayer()
 {
-	EDirection_Type NextDirection = EDirection_Type::Dir_None;
+	FVector2D TargetArrayLocation = MapManager->Search(EFieldType::Fld_Player);
+	FVector2D TargetDirection = FVector2D(TargetArrayLocation - ArrayLocation).ClampAxes(-1.0f, 1.0f);
+	EDirection_Type NextDirection = RogueUtility::GetDirection(TargetDirection);
 
+	this->Turn(NextDirection);
+}
+
+void AEnemyBase::Move()
+{
 	if (MapManager)
 	{
 		FVector2D TargetArrayLocation = MapManager->Search(EFieldType::Fld_Player);
 		FVector2D TargetDirection = FVector2D(TargetArrayLocation - ArrayLocation).ClampAxes(-1.0f, 1.0f);
 		FVector2D NextArrayLocation = ArrayLocation + TargetDirection;
-		NextDirection = RogueUtility::GetDirection(TargetDirection);
 
 		if (MapManager->IsPossibleMove(NextArrayLocation))
 		{
 			this->AdjustLocation(NextArrayLocation);
 		}
-	}
 
-	return NextDirection;
+		this->TurnToPlayer();
+
+		bConsumeAction = true;
+	}
 }
