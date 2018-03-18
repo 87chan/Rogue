@@ -6,18 +6,33 @@
 #include "Rogue.h"
 #include "MapManager.generated.h"
 
+class AEnemyManager;
+
+USTRUCT(BlueprintType)
+struct FEffectInfo
+{
+	GENERATED_USTRUCT_BODY()
+
+	FEffectInfo() : EffectType(EEffectType::Eff_None), Damage() {}
+	FEffectInfo(EEffectType InEffectType, int32 InDamage) : EffectType(InEffectType), Damage(InDamage) {}
+
+public:
+	EEffectType	EffectType;
+	int32		Damage;
+};
+
 USTRUCT(BlueprintType)
 struct FFieldInfo
 {
 	GENERATED_USTRUCT_BODY()
 
-		FFieldInfo() : bOpen(false), FieldType(EFieldType::Fld_None), EffectType(EEffectType::Eff_None) {}
-	FFieldInfo(EFieldType InFieldType, EEffectType InEffectType) : bOpen(false), FieldType(InFieldType), EffectType(InEffectType) {}
+	FFieldInfo() : bOpen(false), FieldType(EFieldType::Fld_None) {}
+	FFieldInfo(EFieldType InFieldType, EEffectType InEffectType) : bOpen(false), FieldType(InFieldType) {}
 
 public:
 	bool		bOpen;
 	EFieldType	FieldType;
-	EEffectType	EffectType;
+	TArray<FEffectInfo>	EffectList;
 };
 
 /**
@@ -44,11 +59,15 @@ public:
 	bool IsPossibleMove(const FVector2D& ArrayLocation) const;
 
 public:
+	const FEffectInfo GetEffectInfo(const FVector2D& InArrayLocation, int32 Index) const;
+	void Consume(const FVector2D& InArrayLocation, int32 Index);
+
 	void ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type);
 
-	void EffectTypeSet(const FVector2D& ArrayLocation, EEffectType Type);
+	void EffectInfoSet(const FVector2D& ArrayLocation, FEffectInfo Info);
 
 	const FVector2D Search(EFieldType Type) const;
+	void Search(EEffectType Type, FVector2D& OutArrayLoc, int32& OutIndex) const;
 
 private:
 	AActor* SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type);
@@ -76,6 +95,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Rogue|MapManager")
 	UClass* EnemyClass;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Rogue|MapManager")
+	AEnemyManager* EnemyManager;
 
 private:
 	bool bCreatedMap;

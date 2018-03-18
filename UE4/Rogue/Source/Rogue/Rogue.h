@@ -46,6 +46,7 @@ UENUM(BlueprintType)
 enum class EPhaseType : uint8
 {
 	Phase_PlayerAction,
+	Phase_PlayerAttack,
 	Phase_EnemyMove,
 	Phase_TrapAction,
 	Phase_EnemyAction,

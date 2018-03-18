@@ -15,6 +15,7 @@ AMapManager::AMapManager(const FObjectInitializer& ObjectInitializer)
 	, WallClass(nullptr)
 	, GoalClass(nullptr)
 	, EnemyClass(nullptr)
+	, EnemyManager(nullptr)
 {
 	TArray<FFieldInfo> FieldInfo;
 	FieldInfo.Init(FFieldInfo(), Width);
@@ -107,6 +108,26 @@ bool AMapManager::IsPossibleMove(const FVector2D& ArrayLocation) const
 	return ((Type & EFieldType::FldGrp_TopLayer) == EFieldType::Fld_None);
 }
 
+const FEffectInfo AMapManager::GetEffectInfo(const FVector2D& InArrayLocation, int32 Index) const
+{
+	FEffectInfo Info = FEffectInfo();
+
+	if (Index <= FieldArray[(int32)InArrayLocation.Y][(int32)InArrayLocation.X].EffectList.Num() - 1)
+	{
+		Info = FieldArray[(int32)InArrayLocation.Y][(int32)InArrayLocation.X].EffectList[Index];
+	}
+
+	return Info;
+}
+
+void AMapManager::Consume(const FVector2D& InArrayLocation, int32 Index)
+{
+	if (Index <= FieldArray[(int32)InArrayLocation.Y][(int32)InArrayLocation.X].EffectList.Num() - 1)
+	{
+		FieldArray[(int32)InArrayLocation.Y][(int32)InArrayLocation.X].EffectList.RemoveAt(Index);
+	}
+}
+
 void AMapManager::ChangeFieldType(const FVector2D& PrevArrayLoc, const FVector2D& NextArrayLoc, EFieldType Type)
 {
 	FieldArray[(int32)PrevArrayLoc.Y][(int32)PrevArrayLoc.X].FieldType &= ~Type;
@@ -127,6 +148,30 @@ const FVector2D AMapManager::Search(EFieldType Type) const
 	}
 
 	return FVector2D::ZeroVector;
+}
+
+void AMapManager::Search(EEffectType Type, FVector2D& OutArrayLoc, int32& OutIndex) const
+{
+	for (int32 i = 0; i < Height; ++i)
+	{
+		for (int32 j = 0; j < Width; ++j)
+		{
+			TArray<FEffectInfo> InfoList = FieldArray[i][j].EffectList;
+			if (0 != InfoList.Num())
+			{
+				for (int32 k = 0; k < InfoList.Num(); ++k)
+				{
+					if ((InfoList[k].EffectType & Type) != EEffectType::Eff_None)
+					{
+						OutArrayLoc = FVector2D((float)j, (float)i);
+						OutIndex = k;
+
+						return;
+					}
+				}
+			}
+		}
+	}
 }
 
 AActor* AMapManager::SpawnActor(UClass* Class, const FVector2D& ArrayLocation, EFieldType Type)
@@ -152,7 +197,7 @@ void AMapManager::FieldTypeSet(const FVector2D& ArrayLocation, EFieldType Type)
 	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].FieldType |= Type;
 }
 
-void AMapManager::EffectTypeSet(const FVector2D& ArrayLocation, EEffectType Type)
+void AMapManager::EffectInfoSet(const FVector2D& ArrayLocation, FEffectInfo Info)
 {
-	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].EffectType |= Type;
+	FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].EffectList.Add(Info);
 }

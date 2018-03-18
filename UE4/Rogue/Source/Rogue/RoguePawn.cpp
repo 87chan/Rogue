@@ -17,6 +17,10 @@ ARoguePawn::ARoguePawn(const FObjectInitializer& ObjectInitializer)
 	, BaseAttack()
 	, BaseDeffence()
 {
+	MaxLifePoint = 100;
+	LeftLifePoint = MaxLifePoint;
+	BaseAttack = 15;
+	BaseDeffence = 5;
 }
 
 void ARoguePawn::BeginPlay()
@@ -29,6 +33,7 @@ void ARoguePawn::BeginPlay()
 
 void ARoguePawn::Turn(EDirection_Type DirType)
 {
+	Direction = DirType;
 	RootComponent->SetRelativeRotation(RogueUtility::GetRotation(DirType));
 }
 
@@ -48,5 +53,8 @@ void ARoguePawn::AdjustLocation(FVector2D InArrayLocation)
 void ARoguePawn::Attack()
 {
 	FVector2D AttackArrayLocation = ArrayLocation + RogueUtility::GetDirection(Direction);
-	MapManager->EffectTypeSet(AttackArrayLocation, this->GetAttackType());
+
+	FEffectInfo Info = FEffectInfo(this->GetAttackType(), BaseAttack);
+
+	MapManager->EffectInfoSet(AttackArrayLocation, Info);
 }

@@ -21,10 +21,12 @@ public:
 	//~ Actor interface.
 	void BeginPlay();
 
-public:
+	//~ ARoguePawn interface.
 	EFieldType GetFieldType() const override { return EFieldType::Fld_Enemy; }
 
 	EEffectType GetAttackType() const override { return EEffectType::Eff_EnemyrAttack; }
+
+	virtual void ApplyDamage() override;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")

@@ -38,6 +38,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
 	void Attack();
 
+	UFUNCTION(BlueprintCallable, Category = "Rogue|RoguePawn")
+	virtual void ApplyDamage() {}
+
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Rogue|RoguePawn")
 	AMapManager* MapManager;
