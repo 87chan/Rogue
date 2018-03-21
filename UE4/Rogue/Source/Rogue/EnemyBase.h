@@ -22,9 +22,9 @@ public:
 	void BeginPlay();
 
 	//~ ARoguePawn interface.
-	EFieldType GetFieldType() const override { return EFieldType::Fld_Enemy; }
+	EFieldType GetFieldType() const override { return EFieldType::Enemy; }
 
-	EEffectType GetAttackType() const override { return EEffectType::Eff_EnemyAttack; }
+	EEffectType GetAttackType() const override { return EEffectType::EnemyAttack; }
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|EnemyBase")

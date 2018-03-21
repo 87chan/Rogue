@@ -31,7 +31,7 @@ void AMapManager::CreateMap()
 		for (int32 j = 0; j < Width; ++j)
 		{
 			bool bSurround = ((i == 0) || (i == Height - 1) || (j == 0) || (j == Width - 1));
-			EFieldType Type = (bSurround) ? EFieldType::Fld_Wall : EFieldType::FldGrp_BottomLayer;
+			EFieldType Type = (bSurround) ? EFieldType::Wall : EFieldType::Grp_BottomLayer;
 
 			if (bSurround)
 			{
@@ -48,12 +48,12 @@ void AMapManager::CreateMap()
 	
 	// Goal.
 	FVector2D GoalArrayLoc = this->GetRandomArrayLocation();
-	this->SpawnActor(GoalClass, GoalArrayLoc, EFieldType::Fld_Goal);
+	this->SpawnActor(GoalClass, GoalArrayLoc, EFieldType::Goal);
 
 	for (int32 i = 0; i < DefaultEnemyNum; ++i)
 	{
 		FVector2D EnemyArrayLoc = this->GetRandomArrayLocation();
-		this->SpawnActor(EnemyClass, EnemyArrayLoc, EFieldType::Fld_Enemy);
+		this->SpawnActor(EnemyClass, EnemyArrayLoc, EFieldType::Enemy);
 	}
 }
 
@@ -93,7 +93,7 @@ FVector2D AMapManager::GetRandomArrayLocation() const
 
 	if (0 < FieldArray.Num())
 	{
-		while ((FieldArray[Y][X].FieldType & EFieldType::FldGrp_TopLayer) != EFieldType::Fld_None)
+		while ((FieldArray[Y][X].FieldType & EFieldType::Grp_TopLayer) != EFieldType::None)
 		{
 			X = FMath::Rand() % Width;
 			Y = FMath::Rand() % Height;
@@ -106,7 +106,7 @@ FVector2D AMapManager::GetRandomArrayLocation() const
 bool AMapManager::IsPossibleMove(const FVector2D& ArrayLocation) const
 {
 	EFieldType Type = FieldArray[(int32)ArrayLocation.Y][(int32)ArrayLocation.X].FieldType;
-	return ((Type & EFieldType::FldGrp_TopLayer) == EFieldType::Fld_None);
+	return ((Type & EFieldType::Grp_TopLayer) == EFieldType::None);
 }
 
 const FEffectInfo AMapManager::GetEffectInfo(const FVector2D& InArrayLocation, int32 Index) const
@@ -134,7 +134,7 @@ bool AMapManager::CheckExist(const FVector2D& InArrayLocation, EFieldType Type)
 	if (InArrayLocation.X < 0 || Width <= InArrayLocation.X) return false;
 	if (InArrayLocation.Y < 0 || Height <= InArrayLocation.Y) return false;
 
-	if ((FieldArray[(int32)InArrayLocation.Y][(int32)InArrayLocation.X].FieldType & Type) != EFieldType::Fld_None)
+	if ((FieldArray[(int32)InArrayLocation.Y][(int32)InArrayLocation.X].FieldType & Type) != EFieldType::None)
 	{
 		return true;
 	}
@@ -144,7 +144,7 @@ bool AMapManager::CheckExist(const FVector2D& InArrayLocation, EFieldType Type)
 
 bool AMapManager::CheckAdjacent(const FVector2D& InArrayLocation, EFieldType Type)
 {
-	for (int32 i = 0; i < (int32)EDirection_Type::Dir_Num; ++i)
+	for (int32 i = 0; i < (int32)EDirection_Type::Num; ++i)
 	{
 		if (CheckExist(InArrayLocation + RogueUtility::GetDirection(static_cast<EDirection_Type>(i)), Type)) return true;
 	}
@@ -164,7 +164,7 @@ const FVector2D AMapManager::Search(EFieldType Type) const
 	{
 		for (int32 j = 0; j < Width; ++j)
 		{
-			if ((FieldArray[i][j].FieldType & Type) != EFieldType::Fld_None)
+			if ((FieldArray[i][j].FieldType & Type) != EFieldType::None)
 			{
 				return FVector2D((float)j, (float)i);
 			}
@@ -185,7 +185,7 @@ void AMapManager::Search(EEffectType Type, FApplyEffectList& OutList) const
 			{
 				for (int32 k = 0; k < InfoList.Num(); ++k)
 				{
-					if ((InfoList[k].EffectType & Type) != EEffectType::Eff_None)
+					if ((InfoList[k].EffectType & Type) != EEffectType::None)
 					{
 						FApplyEffectInfo ApplyInfo = FApplyEffectInfo();
 						ApplyInfo.ArrayLocation = FVector2D((float)j, (float)i);

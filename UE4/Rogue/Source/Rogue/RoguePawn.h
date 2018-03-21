@@ -24,9 +24,9 @@ public:
 	void BeginPlay() override;
 
 public:
-	virtual EFieldType GetFieldType() const { return EFieldType::Fld_None; }
+	virtual EFieldType GetFieldType() const { return EFieldType::None; }
 
-	virtual EEffectType GetAttackType() const { return EEffectType::Eff_None; }
+	virtual EEffectType GetAttackType() const { return EEffectType::None; }
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Rogue|RoguePawn")

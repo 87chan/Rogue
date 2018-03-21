@@ -13,7 +13,7 @@ struct FEffectInfo
 {
 	GENERATED_USTRUCT_BODY()
 
-	FEffectInfo() : EffectType(EEffectType::Eff_None), Damage() {}
+	FEffectInfo() : EffectType(EEffectType::None), Damage() {}
 	FEffectInfo(EEffectType InEffectType, int32 InDamage) : EffectType(InEffectType), Damage(InDamage) {}
 
 public:
@@ -26,7 +26,7 @@ struct FFieldInfo
 {
 	GENERATED_USTRUCT_BODY()
 
-	FFieldInfo() : bOpen(false), FieldType(EFieldType::Fld_None) {}
+	FFieldInfo() : bOpen(false), FieldType(EFieldType::None) {}
 	FFieldInfo(EFieldType InFieldType, EEffectType InEffectType) : bOpen(false), FieldType(InFieldType) {}
 
 public:

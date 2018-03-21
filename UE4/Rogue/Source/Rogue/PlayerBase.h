@@ -18,9 +18,9 @@ public:
 
 public:
 	//~ RoguePawn interface.
-	EFieldType GetFieldType() const override { return EFieldType::Fld_Player; }
+	EFieldType GetFieldType() const override { return EFieldType::Player; }
 
-	EEffectType GetAttackType() const override { return EEffectType::Eff_PlayerAttack; }
+	EEffectType GetAttackType() const override { return EEffectType::PlayerAttack; }
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Rogue|PlayerBase")

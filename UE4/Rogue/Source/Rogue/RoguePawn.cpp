@@ -10,7 +10,7 @@ ARoguePawn::ARoguePawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, MapManager(nullptr)
 	, ArrayLocation(FVector2D::ZeroVector)
-	, Direction(EDirection_Type::Dir_None)
+	, Direction(EDirection_Type::None)
 	, MaxLifePoint()
 	, LeftLifePoint()
 	, RiskPoint()
@@ -43,7 +43,7 @@ bool ARoguePawn::CheckAdjacent(EFieldType Type)
 
 void ARoguePawn::Turn(EDirection_Type DirType)
 {
-	if (DirType != EDirection_Type::Dir_None)
+	if (DirType != EDirection_Type::None)
 	{
 		Direction = DirType;
 		RootComponent->SetRelativeRotation(RogueUtility::GetRotation(DirType));

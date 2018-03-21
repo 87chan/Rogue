@@ -13,62 +13,62 @@ namespace Rogue
 UENUM(BlueprintType, meta = (Bitflags))
 enum class EFieldType : uint8
 {
-	Fld_None		= 0x00,
-	Fld_Room		= 0x01,
-	Fld_Way			= 0x02,
-	Fld_Wall		= 0x04,
-	Fld_Goal		= 0x08,
-	Fld_Player		= 0x10,
-	Fld_Enemy		= 0x20,
-	Fld_Trap		= 0x40,
+	None		= 0x00,
+	Room		= 0x01,
+	Way			= 0x02,
+	Wall		= 0x04,
+	Goal		= 0x08,
+	Player		= 0x10,
+	Enemy		= 0x20,
+	Trap		= 0x40,
 
-	FldGrp_BottomLayer		=	Fld_Room | Fld_Way,
+	Grp_BottomLayer			=	Room | Way,
 
-	FldGrp_MiddleLayer		=	Fld_Goal | Fld_Trap,
+	Grp_MiddleLayer			=	Goal | Trap,
 
-	FldGrp_PlacementableTop	=	FldGrp_BottomLayer | FldGrp_MiddleLayer,
+	Grp_PlacementableTop	=	Grp_BottomLayer | Grp_MiddleLayer,
 
-	FldGrp_TopLayer			=	Fld_Wall | Fld_Player | Fld_Enemy,
+	Grp_TopLayer			=	Wall | Player | Enemy,
 };
 ENUM_CLASS_FLAGS(EFieldType)
 
 UENUM(BlueprintType, meta = (Bitflags))
 enum class EEffectType : uint8
 {
-	Eff_None			= 0x00,
-	Eff_PlayerAttack	= 0x01,
-	Eff_EnemyAttack		= 0x02,
-	Eff_Trap			= 0x04,
+	None			= 0x00,
+	PlayerAttack	= 0x01,
+	EnemyAttack		= 0x02,
+	Trap			= 0x04,
 };
 ENUM_CLASS_FLAGS(EEffectType)
 
 UENUM(BlueprintType)
 enum class EPhaseType : uint8
 {
-	Phase_PlayerAction,
-	Phase_PlayerAttack,
-	Phase_EnemyMove,
-	Phase_TrapAction,
-	Phase_EnemyAction,
-	Phase_EnemyAttack,
-	Phase_StairCheck,
+	PlayerAction,
+	PlayerAttack,
+	EnemyMove,
+	TrapAction,
+	EnemyAction,
+	EnemyAttack,
+	StairCheck,
 
-	Phase_Num			UMETA(Hidden),
-	Phase_None,
+	Num			UMETA(Hidden),
+	None,
 };
 
 UENUM(BlueprintType)
 enum class EDirection_Type : uint8
 {
-	Dir_Upper,
-	Dir_UpperRight,
-	Dir_Right,
-	Dir_LowerRight,
-	Dir_Lower,
-	Dir_LowerLeft,
-	Dir_Left,
-	Dir_UpperLeft,
+	Upper,
+	UpperRight,
+	Right,
+	LowerRight,
+	Lower,
+	LowerLeft,
+	Left,
+	UpperLeft,
 
-	Dir_Num				UMETA(Hidden),
-	Dir_None,
+	Num				UMETA(Hidden),
+	None,
 };

@@ -9,7 +9,7 @@
 AEnemyManager::AEnemyManager(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, DefaultEnemyNum(0)
-	, ActivePhase(EPhaseType::Phase_None)
+	, ActivePhase(EPhaseType::None)
 {
 	PrimaryActorTick.bCanEverTick = true;
 }
@@ -18,7 +18,7 @@ void AEnemyManager::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (ActivePhase != EPhaseType::Phase_None)
+	if (ActivePhase != EPhaseType::None)
 	{
 		for (const AEnemyBase* Enemy : EnemyArray)
 		{
@@ -30,7 +30,7 @@ void AEnemyManager::Tick(float DeltaSeconds)
 
 		if (ARogueGameModeBase* GameMode = Cast<ARogueGameModeBase>(this->GetWorld()->GetAuthGameMode()))
 		{
-			this->ActivePhase = EPhaseType::Phase_None;
+			this->ActivePhase = EPhaseType::None;
 
 			GameMode->NextPhase();
 		}
