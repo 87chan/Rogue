@@ -79,12 +79,16 @@ void ARoguePawn::ApplyDamage(EEffectType ApplyEffect)
 		FApplyEffectList ApplyEffectList;
 		MapManager->Search(ApplyEffect, ApplyEffectList);
 
+		ApplyEffectList.Sort([](const FApplyEffectInfo& Info1, const FApplyEffectInfo& Info2) {
+			return Info1.Index > Info2.Index;
+		});
+
 		for (FApplyEffectInfo ApplyEffectInfo : ApplyEffectList)
 		{
 			if (ArrayLocation == ApplyEffectInfo.ArrayLocation)
 			{
 				const FEffectInfo EffectInfo = MapManager->GetEffectInfo(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);
-				int32 CalcedDamage = EffectInfo.Damage - BaseDeffence;
+				int32 CalcedDamage = FMath::Max(0, EffectInfo.Damage - BaseDeffence);
 				LeftLifePoint -= CalcedDamage;
 
 				MapManager->Consume(ApplyEffectInfo.ArrayLocation, ApplyEffectInfo.Index);

@@ -191,8 +191,6 @@ void AMapManager::Search(EEffectType Type, FApplyEffectList& OutList) const
 						ApplyInfo.ArrayLocation = FVector2D((float)j, (float)i);
 						ApplyInfo.Index = k;
 						OutList.Add(ApplyInfo);
-
-						return;
 					}
 				}
 			}
